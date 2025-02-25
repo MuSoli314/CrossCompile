@@ -1,14 +1,15 @@
 # Rust 交叉编译：在 macOS 上编译 Linux 可执行文件
+[原文链接](https://blog.csdn.net/wade1010/article/details/128348599)
 
-在开发过程中，开发者可能需要在 macOS 上为 Linux 平台编译可执行文件，这就涉及到交叉编译。本文介绍了如何在 macOS 上使用 Rust 进行交叉编译，特别是针对 `x86_64-unknown-linux-musl` 目标。
+在开发过程中，开发者可能需要在 macOS 上为 Linux 平台编译可执行文件，这就涉及到交叉编译。本文介绍了如何在 macOS 上使用 Rust 进行交叉编译，特别是针对 `aarch64-unknown-linux-musl` 目标。
 
 ## MAC安装必要的工具
 
 ### 1. 添加目标平台
 ```bash
-rustup target add x86_64-unknown-linux-musl
+rustup target add aarch64-unknown-linux-musl
 ```
-这条命令用于添加 `x86_64-unknown-linux-musl` 目标平台。
+这条命令用于添加 `aarch64-unknown-linux-musl` 目标平台。
 
 ### 2. 安装 `musl-cross`
 ```bash
@@ -20,10 +21,10 @@ brew install filosottile/musl-cross/musl-cross
 
 在用户主目录下创建或编辑 `.cargo/config` 文件，添加以下内容：
 ```toml
-[target.x86_64-unknown-linux-musl]
-linker = "x86_64-linux-musl-gcc"
+[target.aarch64-unknown-linux-musl]
+linker = "aarch64-linux-musl-gcc"
 ```
-这段配置指定了在编译 `x86_64-unknown-linux-musl` 目标时使用的链接器。
+这段配置指定了在编译 `aarch64-unknown-linux-musl` 目标时使用的链接器。
 
 ## 编译项目
 
@@ -31,7 +32,7 @@ linker = "x86_64-linux-musl-gcc"
 ```bash
 cargo new cross-compiling
 cd cross-compiling
-cargo build --release --target x86_64-unknown-linux-musl
+cargo build --release --target aarch64-unknown-linux-musl
 ```
 上述步骤将生成适用于 Linux 的可执行文件。
 
